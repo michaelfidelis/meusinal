@@ -3,6 +3,8 @@ import cv2
 import numpy as np
 from IData import IData
 from CData import CData
+from LData import LData
+from VData import VData
 
 # =====================================================================================================================
 # Principal
@@ -17,6 +19,13 @@ def main():
     cData = CData()
     cData.start()
 
+    lData = LData()
+    lData.start()
+
+    vData = VData()
+    vData.start()
+
+
 
     while(capture.isOpened()):
         _, image = capture.read()
@@ -28,6 +37,8 @@ def main():
 
         cData.setImagem(roi)
         iData.setImagem(roi)
+        lData.setImagem(roi)
+        vData.setImagem(roi)
 
 
         #comContornos = obtemContornos(crop_image, roi)
