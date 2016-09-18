@@ -1,15 +1,23 @@
 #!/usr/bin/env python
 import cv2
 import numpy as np
-from Data import *
+from IData import IData
+from CData import CData
 
 # =====================================================================================================================
 # Principal
 def main():
     capture = cv2.VideoCapture(0)
-    data = Data()
     count = 0
     letra = ''
+
+    iData = IData()
+    iData.start()
+
+    cData = CData()
+    cData.start()
+
+
     while(capture.isOpened()):
         _, image = capture.read()
 
@@ -17,10 +25,13 @@ def main():
 
         roi = obterROI(crop_image)
         cv2.imshow('ROI', cv2.flip(roi, 1))
-        data.match(roi)
 
-        comContornos = obtemContornos(crop_image, roi)
-        cv2.imshow('Com Contornos', cv2.flip(comContornos, 1))
+        cData.setImagem(roi)
+        iData.setImagem(roi)
+
+
+        #comContornos = obtemContornos(crop_image, roi)
+        #cv2.imshow('Com Contornos', cv2.flip(comContornos, 1))
 
         flipped_image = cv2.flip(image, 1)
         cv2.imshow('capture', flipped_image)
@@ -29,6 +40,11 @@ def main():
         if  interrupt & 0xFF == ord('q'):
             print "Encerrando execucao..."
             break
+
+        if  interrupt & 0xFF == ord('a'):
+            data.verify = True
+            data.image = roi
+
         if  interrupt & 0xFF == ord('g'):
             nome = 'gerado/'+ str(letra) + '_' + str(count) + '.png'
             print nome
@@ -40,7 +56,8 @@ def main():
             print 'Configuracao alterada para ' + str(letra)
             count = 0
 
-
+    iData.join()
+    cData.join()
     capture.release()
 
     cv2.destroyAllWindows()
@@ -54,10 +71,14 @@ def obterSubImagem(image):
 # =====================================================================================================================
 # Etapa 1 - Obtem a area de interesse
 def obterROI(image):
+    kernel = np.ones((5, 5), np.uint8)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     blur = cv2.GaussianBlur(gray,(5,5),0)
     _,thresh = cv2.threshold(blur,127,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
-    return cv2.medianBlur(thresh, 5)
+    opening = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
+    closing = cv2.morphologyEx(opening, cv2.MORPH_CLOSE, kernel)
+
+    return closing #cv2.medianBlur(thresh, 5)
 
 # =====================================================================================================================
 # Etapa 3 - Obtem contornos

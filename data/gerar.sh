@@ -1,0 +1,8 @@
+
+clear
+echo "Gerando código..."
+for i in *.png; do
+    echo dataSet[\'`echo $i | cut -d. -f1`\'] = cv2.imread\(\'data/`echo $i`\',0\);
+done > data.txt
+echo "Fim..."
+gedit data.txt
