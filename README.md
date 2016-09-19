@@ -8,3 +8,5 @@ Utilizando OpenCV e Python
 **Em andamento:** Identificar o restante das configurações
 
 **Objetivo:** Identificar sinais com mais de uma configuração (movimento)
+
+**Status:** [###########################################################################-------------------------] **75%**
