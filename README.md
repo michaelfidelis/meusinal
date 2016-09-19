@@ -9,4 +9,4 @@ Utilizando OpenCV e Python
 
 **Objetivo:** Identificar sinais com mais de uma configuração (movimento)
 
-**Status:** [###########################################################################-------------------------] **75%**
+**Status:** [###################################===============] **70%**
