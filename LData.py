@@ -1,17 +1,14 @@
 #! /usr/bin/python
 import cv2
 import numpy as np
+from Data import Data
 from threading import Thread
 
-class LData(Thread):
-    threshold = 0.80
-    dataSet = {}
-    image = None
-    verify = False
+class LData(Data):
 
-    def __init__(self):
-        Thread.__init__(self)
-        dataSet['L_0'] = cv2.imread('data/L_0.png',0)
+    def __init__(self, letra):
+        Data.__init__(self, letra)
+        self.dataSet['L_0'] = cv2.imread('data/L_0.png',0)
         self.dataSet['L_1'] = cv2.imread('data/L_1.png',0)
         self.dataSet['L_10'] = cv2.imread('data/L_10.png',0)
         self.dataSet['L_100'] = cv2.imread('data/L_100.png',0)
@@ -212,23 +209,3 @@ class LData(Thread):
         self.dataSet['L_97'] = cv2.imread('data/L_97.png',0)
         self.dataSet['L_98'] = cv2.imread('data/L_98.png',0)
         self.dataSet['L_99'] = cv2.imread('data/L_99.png',0)
-
-
-    def setImagem(self, image):
-        self.verify = True
-        self.image = image
-
-    def run(self):
-        while True:
-            if (self.verify):
-                self.match()
-                self.verify = False
-            else:
-                print ""
-
-    def match(self):
-        for chave in self.dataSet:
-            res = cv2.matchTemplate(self.image, self.dataSet[chave], cv2.TM_CCOEFF_NORMED)
-            loc = np.where( res >= self.threshold)
-            for pt in zip(*loc[::-1]):
-                print "Corresponde com ", chave.split('_', 1)[0]

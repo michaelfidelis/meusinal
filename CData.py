@@ -1,16 +1,13 @@
 #! /usr/bin/python
 import cv2
 import numpy as np
+from Data import Data
 from threading import Thread
 
-class CData(Thread):
-    threshold = 0.80
-    dataSet = {}
-    image = None
-    verify = False
+class CData(Data):
 
-    def __init__(self):
-        Thread.__init__(self)
+    def __init__(self, letra):
+        Data.__init__(self, letra)
         self.dataSet['C_0'] = cv2.imread('data/C_0.png',0)
         self.dataSet['C_1'] = cv2.imread('data/C_1.png',0)
         self.dataSet['C_10'] = cv2.imread('data/C_10.png',0)
@@ -177,21 +174,4 @@ class CData(Thread):
         self.dataSet['C_98'] = cv2.imread('data/C_98.png',0)
         self.dataSet['C_99'] = cv2.imread('data/C_99.png',0)
 
-    def setImagem(self, image):
-        self.verify = True
-        self.image = image
 
-    def run(self):
-        while True:
-            if (self.verify):
-                self.match()
-                self.verify = False
-            else:
-                print ""
-
-    def match(self):
-        for chave in self.dataSet:
-            res = cv2.matchTemplate(self.image, self.dataSet[chave], cv2.TM_CCOEFF_NORMED)
-            loc = np.where( res >= self.threshold)
-            for pt in zip(*loc[::-1]):
-                print "Corresponde com ", chave.split('_', 1)[0]

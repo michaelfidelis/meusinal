@@ -1,31 +1,32 @@
 #!/usr/bin/env python
 import cv2
 import numpy as np
-from IData import IData
+import sys
+
 from CData import CData
+from IData import IData
 from LData import LData
 from VData import VData
+from AData import AData
 
 # =====================================================================================================================
 # Principal
 def main():
     capture = cv2.VideoCapture(0)
-    count = 0
-    letra = ''
+    count = 500
+    letra = [0];
 
-    iData = IData()
-    iData.start()
+    cData = CData(letra)
+    iData = IData(letra)
+    lData = LData(letra)
+    vData = VData(letra)
+    aData = AData(letra)
 
-    cData = CData()
     cData.start()
-
-    lData = LData()
+    iData.start()
     lData.start()
-
-    vData = VData()
     vData.start()
-
-
+    aData.start()
 
     while(capture.isOpened()):
         _, image = capture.read()
@@ -39,23 +40,19 @@ def main():
         iData.setImagem(roi)
         lData.setImagem(roi)
         vData.setImagem(roi)
+        aData.setImagem(roi)
 
 
-        #comContornos = obtemContornos(crop_image, roi)
-        #cv2.imshow('Com Contornos', cv2.flip(comContornos, 1))
 
         flipped_image = cv2.flip(image, 1)
-        cv2.imshow('capture', flipped_image)
+        cv2.putText(flipped_image, 'Gesto ' + ('' if (letra[0] is None) else letra[0]), (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 5, cv2.LINE_AA)
+        cv2.imshow('Principal', flipped_image)
 
         interrupt = cv2.waitKey(10)
+
         if  interrupt & 0xFF == ord('q'):
-            print "Encerrando execucao..."
+            print 'Encerrando execucao...'
             break
-
-        if  interrupt & 0xFF == ord('a'):
-            data.verify = True
-            data.image = roi
-
         if  interrupt & 0xFF == ord('g'):
             nome = 'gerado/'+ str(letra) + '_' + str(count) + '.png'
             print nome
@@ -65,14 +62,15 @@ def main():
             text = raw_input('Digite uma configuracao: ')
             letra = text.upper()
             print 'Configuracao alterada para ' + str(letra)
-            count = 0
+            count = 500
 
-    iData.join()
     cData.join()
+    iData.join()
+    lData.join()
+    vData.join()
+    aData.join()
     capture.release()
-
     cv2.destroyAllWindows()
-
 # =====================================================================================================================
 # Etapa 0 - Obtem sub imagem
 def obterSubImagem(image):
@@ -88,52 +86,8 @@ def obterROI(image):
     _,thresh = cv2.threshold(blur,127,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
     opening = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
     closing = cv2.morphologyEx(opening, cv2.MORPH_CLOSE, kernel)
+    return closing
 
-    return closing #cv2.medianBlur(thresh, 5)
-
-# =====================================================================================================================
-# Etapa 3 - Obtem contornos
-def obtemContornos(image, roi):
-    maxArea = 0
-    drawing = np.zeros(image.shape, np.uint8)
-    _, contours, hierarchy = cv2.findContours(roi.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    for i in range(len(contours)):
-            cnt = contours[i]
-            area = cv2.contourArea(cnt)
-            if(area > maxArea):
-                maxArea = area
-                ci=i
-    cnt = contours[ci]
-    hull = cv2.convexHull(cnt)
-    moments = cv2.moments(cnt)
-    if moments['m00']!=0:
-        cx = int(moments['m10']/moments['m00']) # cx = M10/M00
-        cy = int(moments['m01']/moments['m00']) # cy = M01/M00
-    centr=(cx,cy)
-
-    cv2.circle(drawing,centr,5,[0,0,255],2)
-    cv2.drawContours(drawing,[cnt],0,(0,255,0),2)
-    cv2.drawContours(drawing,[hull],0,(0,0,255),2)
-    cnt = cv2.approxPolyDP(cnt,0.02*cv2.arcLength(cnt,True),True)
-    hull = cv2.convexHull(cnt,returnPoints = False)
-
-    if(1):
-        defects = cv2.convexityDefects(cnt,hull)
-        mind=0
-        maxd=0
-        if (defects is not None):
-            for i in range(defects.shape[0]):
-                s,e,f,d = defects[i,0]
-                start = tuple(cnt[s][0])
-                end = tuple(cnt[e][0])
-                far = tuple(cnt[f][0])
-                dist = cv2.pointPolygonTest(cnt,centr,True)
-                #cv2.circle(drawing, far, 5, [0,0,255], -1)
-                cv2.circle(drawing, end, 5, [0,0,255], -1)
-                cv2.circle(drawing, start, 5, [0,0,255], -2)
-
-        i=0
-    return drawing
 
 if __name__ == '__main__':
     main()
