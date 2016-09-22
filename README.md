@@ -3,8 +3,10 @@
 
 Utilizando OpenCV e Python
 
-**Estado atual:** Identifica as letras de A a I, K e L.
+**Estado atual:** Identifica as configurações de A, C, I, L e V
 
-**Em andamento:** Identificar o restante das letras
+**Em andamento:** Identificar o restante das configurações
 
-**Desejado:** Identificar sinais com movimento
+**Objetivo:** Identificar sinais com mais de uma configuração (movimento)
+
+**Status:** [###################################===============] **70%**
