@@ -9,9 +9,9 @@ class Data(Thread):
     image = None
     verify = False
 
-    def __init__(self, letra):
+    def __init__(self, configuracao):
         Thread.__init__(self)
-        self.letra = letra
+        self.configuracao = configuracao
         self.analiseAtiva = True
 
     def setImagem(self, image):
@@ -22,14 +22,15 @@ class Data(Thread):
     def encerrarAnalise(self):
         self.analiseAtiva = False
         self.join()
+        print 'Parando thread.'
 
     def run(self):
         while (self.analiseAtiva):
             if (self.verify):
                 self.verify = False
-                self.letra[0] = self.match()
+                self.configuracao[0] = self.match()
             else:
-                self.letra[0] = None
+                self.configuracao[0] = None
 
     def match(self):
         for chave in self.dataSet:

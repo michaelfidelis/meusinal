@@ -15,7 +15,6 @@ from AData import AData
 class Principal:
     def __init__(self):
         self.capture = cv2.VideoCapture(0)
-        self.count = 500
         self.configuracao = [0];
         self.fila = Fila()
 
@@ -49,7 +48,7 @@ class Principal:
 
 
                 flipped_image = cv2.flip(image, 1)
-                cv2.putText(flipped_image, 'Gesto ' + ('' if (self.fila.getUltimoAdicionado() is None) else self.fila.getUltimoAdicionado()), (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 5, cv2.LINE_AA)
+                cv2.putText(flipped_image, self.fila.getUltimoAdicionado(), (10, 60), cv2.FONT_HERSHEY_COMPLEX, 2, (0, 0, 0))
                 cv2.imshow('Principal', flipped_image)
 
                 interrupt = cv2.waitKey(10)
@@ -70,13 +69,13 @@ class Principal:
 
         self.capture.release()
         cv2.destroyAllWindows()
-    # =====================================================================================================================
+    # =================================================================================================================
     # Etapa 0 - Obtem sub imagem
     def obterSubImagem(self, image):
         cv2.rectangle(image,(250,250),(10,10),(0,255,0),0)
         return image[10:250, 10:250]
 
-    # =====================================================================================================================
+    # =================================================================================================================
     # Etapa 1 - Obtem a area de interesse
     def obterROI(self, image):
         kernel = np.ones((5, 5), np.uint8)
