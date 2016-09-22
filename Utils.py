@@ -1,3 +1,4 @@
+#! /usr/bin/python
 from collections import deque
 
 class Fila:

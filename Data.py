@@ -21,6 +21,7 @@ class Data(Thread):
 
     def encerrarAnalise(self):
         self.analiseAtiva = False
+        self.join()
 
     def run(self):
         while (self.analiseAtiva):
