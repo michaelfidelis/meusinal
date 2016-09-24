@@ -32,23 +32,32 @@ class Principal:
 
         while(self.capture.isOpened()):
             try:
+                # Obtem a imagem da camera
                 _, image = self.capture.read()
 
+                # Gera uma sub imagem para processamento
                 crop_image = self.obterSubImagem(image)
 
+                # Obtem a area de interesse
                 roi = self.obterROI(crop_image)
-                cv2.imshow('ROI', cv2.flip(roi, 1))
 
-                self.cData.setImagem(roi)
-                self.iData.setImagem(roi)
-                self.lData.setImagem(roi)
-                self.vData.setImagem(roi)
-                self.aData.setImagem(roi)
+                # Altera o tamanho da imagem melhorar o processamento
+                resizedROI = cv2.resize(roi, (120, 120))
+                cv2.imshow('ROI', cv2.flip(resizedROI, 1))
+
+                # Informa o frame atual para as threads
+                self.cData.setImagem(resizedROI)
+                self.iData.setImagem(resizedROI)
+                self.lData.setImagem(resizedROI)
+                self.vData.setImagem(resizedROI)
+                self.aData.setImagem(resizedROI)
+
+                # Adiciona a configuracao identificada na fila
                 self.fila.adicionar(self.configuracao[0])
 
-
+                # Exibe a imagem obtida pela camera
                 flipped_image = cv2.flip(image, 1)
-                cv2.putText(flipped_image, self.fila.getUltimoAdicionado(), (10, 60), cv2.FONT_HERSHEY_COMPLEX, 2, (0, 0, 0))
+                cv2.putText(flipped_image, self.fila.getUltimoAdicionado(), (30, 100), cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 0, 0), 2)
                 cv2.imshow('Principal', flipped_image)
 
                 interrupt = cv2.waitKey(10)
@@ -60,19 +69,24 @@ class Principal:
                 print(inst)
                 print('Encerrando execucao.')
                 break
+    # =================================================================================================================
+    # Fim do processamento
 
+        # Fecha a camera e as janelas
+        self.capture.release()
+        cv2.destroyAllWindows()
+
+        # Ao sair do processamento encerra todas as threads
         self.cData.encerrarAnalise()
         self.iData.encerrarAnalise()
         self.lData.encerrarAnalise()
         self.vData.encerrarAnalise()
         self.aData.encerrarAnalise()
 
-        self.capture.release()
-        cv2.destroyAllWindows()
     # =================================================================================================================
     # Etapa 0 - Obtem sub imagem
     def obterSubImagem(self, image):
-        cv2.rectangle(image,(250,250),(10,10),(0,255,0),0)
+        cv2.rectangle(image,(250,250),(10,10),(0,255,0),2)
         return image[10:250, 10:250]
 
     # =================================================================================================================

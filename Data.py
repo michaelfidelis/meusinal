@@ -25,6 +25,10 @@ class Data(Thread):
         print 'Parando thread.'
 
     def run(self):
+        print('Iniciando a thread.')
+        for chave in self.dataSet:
+            self.dataSet[chave] = cv2.resize(self.dataSet[chave], (120, 120))
+
         while (self.analiseAtiva):
             if (self.verify):
                 self.verify = False

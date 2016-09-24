@@ -173,5 +173,3 @@ class CData(Data):
         self.dataSet['C_97'] = cv2.imread('data/C_97.png',0)
         self.dataSet['C_98'] = cv2.imread('data/C_98.png',0)
         self.dataSet['C_99'] = cv2.imread('data/C_99.png',0)
-
-
