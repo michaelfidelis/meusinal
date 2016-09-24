@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 from threading import Thread
 
+
 class Data(Thread):
     threshold = 0.75
     dataSet = {}
@@ -18,19 +19,18 @@ class Data(Thread):
         self.verify = True
         self.image = image
 
-
     def encerrarAnalise(self):
         self.analiseAtiva = False
         self.join()
-        print 'Parando thread.'
+        print('Parando thread.')
 
     def run(self):
         print('Iniciando a thread.')
         for chave in self.dataSet:
             self.dataSet[chave] = cv2.resize(self.dataSet[chave], (120, 120))
 
-        while (self.analiseAtiva):
-            if (self.verify):
+        while self.analiseAtiva:
+            if self.verify:
                 self.verify = False
                 self.configuracao[0] = self.match()
             else:
@@ -39,6 +39,6 @@ class Data(Thread):
     def match(self):
         for chave in self.dataSet:
             res = cv2.matchTemplate(self.image, self.dataSet[chave], cv2.TM_CCOEFF_NORMED)
-            loc = np.where( res >= self.threshold)
+            loc = np.where(res >= self.threshold)
             for pt in zip(*loc[::-1]):
                 return chave.split('_', 1)[0]
