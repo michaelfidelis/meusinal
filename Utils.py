@@ -1,21 +1,24 @@
 #!/usr/bin/python
-from collections import deque
+# -*- coding: utf-8 -*-
 
+from collections import deque
+from Dicionario import Dicionario
+
+import itertools
 class Fila:
     TAMANHO_FILA = 10
 
     def __init__(self):
         self.letra = None
-        self.fila = deque([])
+        self.fila = deque([], maxlen=10)
+        self.dicio = Dicionario(self.fila)
 
     def adicionar(self, letra):
         if letra is not None and self.letra != letra:
             self.fila.append(letra)
-            self.letra = letra
+            self.dicio.verifica()
+            self.letra = self.fila[-1]
             print 'Adicionando: ' + str(letra)
-            if len(self.fila) > self.TAMANHO_FILA:
-                #print 'Removendo  : ' + str(self.fila[0])
-                self.fila.popleft()
 
     def getUltimoAdicionado(self):
         return self.letra

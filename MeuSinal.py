@@ -1,8 +1,10 @@
-#!/usr/bin/env python
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import cv2
 import numpy as np
 from Utils import Fila
-
+import traceback
 from Data import Data
 from AnalisadorGeral import AnalisadorGeral
 
@@ -17,40 +19,45 @@ class Principal:
         self.analisador.iniciarAnalise()
 
         while self.capture.isOpened():
+            try:
+                # Obtem a imagem da camera
+                _, image = self.capture.read()
 
-            # Obtem a imagem da camera
-            _, image = self.capture.read()
+                # Gera uma sub imagem para processamento
+                crop_image = self.obterSubImagem(image)
 
-            # Gera uma sub imagem para processamento
-            crop_image = self.obterSubImagem(image)
+                # Obtem a area de interesse
+                roi = self.obterROI(crop_image)
 
-            # Obtem a area de interesse
-            roi = self.obterROI(crop_image)
+                # Altera o tamanho da imagem melhorar o processamento
+                cv2.imshow('ROI', cv2.flip(roi, 1))
 
-            # Altera o tamanho da imagem melhorar o processamento
-            cv2.imshow('ROI', cv2.flip(roi, 1))
+                # Informa o frame atual para as threads
+                self.analisador.setFrame(roi, self.fila.getUltimoAdicionado())
 
-            # Informa o frame atual para as threads
-            self.analisador.setFrame(roi)
+                # Adiciona a configuracao identificada na fila
+                self.fila.adicionar(self.configuracao[0])
 
-            # Adiciona a configuracao identificada na fila
-            self.fila.adicionar(self.configuracao[0])
+                # Exibe a imagem obtida pela camera
+                flipped_image = cv2.flip(image, 1)
+                cv2.putText(flipped_image, self.fila.getUltimoAdicionado(), (30, 100), cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 0, 0), 2)
+                cv2.putText(flipped_image, self.fila.toString(), (30, 450), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2)
+                cv2.imshow('Principal', flipped_image)
 
-            # Exibe a imagem obtida pela camera
-            flipped_image = cv2.flip(image, 1)
-            cv2.putText(flipped_image, self.fila.getUltimoAdicionado(), (30, 100), cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 0, 0), 2)
-            cv2.putText(flipped_image, self.fila.toString(), (30, 450), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2)
-            cv2.imshow('Principal', flipped_image)
+                interrupt = cv2.waitKey(10)
+                if interrupt & 0xFF == ord('q'):
+                    print('Encerrando execucao...')
+                    break
 
-            interrupt = cv2.waitKey(10)
-            if interrupt & 0xFF == ord('q'):
-                print('Encerrando execucao...')
+                if interrupt & 0xFF == ord('c'):
+                    print('Limpando fila...')
+                    self.fila.limparFila()
+
+            except Exception as inst:
+                print('Ocorreu um erro: ')
+                print(inst)
+                traceback.print_exc()
                 break
-
-            if interrupt & 0xFF == ord('c'):
-                print('Limpando fila...')
-                self.fila.limparFila()
-
     # =================================================================================================================
     # Fim do processamento
 
