@@ -1,6 +1,5 @@
-#! /usr/bin/python
+#!/usr/bin/python
 from collections import deque
-
 
 class Fila:
     TAMANHO_FILA = 10
@@ -14,8 +13,8 @@ class Fila:
             self.fila.append(letra)
             self.letra = letra
             print 'Adicionando: ' + str(letra)
-            if len(self.fila) > 10:
-                print 'Removendo  : ' + str(self.fila[0])
+            if len(self.fila) > self.TAMANHO_FILA:
+                #print 'Removendo  : ' + str(self.fila[0])
                 self.fila.popleft()
 
     def getUltimoAdicionado(self):
@@ -28,7 +27,7 @@ class Fila:
         self.fila.clear()
 
     def toString(self):
-        filaTexto = ''
+        filaTexto = ' '
         for config in self.fila:
-            filaTexto += config + ' '
+            filaTexto += str(config) + ' '
         return filaTexto

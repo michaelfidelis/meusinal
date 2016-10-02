@@ -3,90 +3,63 @@ import cv2
 import numpy as np
 from Utils import Fila
 
-from CData import CData
-from IData import IData
-from LData import LData
-from VData import VData
-from AData import AData
+from Data import Data
+from AnalisadorGeral import AnalisadorGeral
 
 # =====================================================================================================================
 # Principal
 class Principal:
     def __init__(self):
         self.capture = cv2.VideoCapture(0)
-        self.configuracao = [0]
+        self.configuracao = ['']
         self.fila = Fila()
-
-        self.cData = CData(self.configuracao)
-        self.iData = IData(self.configuracao)
-        self.lData = LData(self.configuracao)
-        self.vData = VData(self.configuracao)
-        self.aData = AData(self.configuracao)
-
-        self.cData.start()
-        self.iData.start()
-        self.lData.start()
-        self.vData.start()
-        self.aData.start()
+        self.analisador = AnalisadorGeral(self.configuracao)
+        self.analisador.iniciarAnalise()
 
         while self.capture.isOpened():
-            try:
-                # Obtem a imagem da camera
-                _, image = self.capture.read()
 
-                # Gera uma sub imagem para processamento
-                crop_image = self.obterSubImagem(image)
+            # Obtem a imagem da camera
+            _, image = self.capture.read()
 
-                # Obtem a area de interesse
-                roi = self.obterROI(crop_image)
+            # Gera uma sub imagem para processamento
+            crop_image = self.obterSubImagem(image)
 
-                # Altera o tamanho da imagem melhorar o processamento
-                resizedROI = cv2.resize(roi, (120, 120))
-                cv2.imshow('ROI', cv2.flip(resizedROI, 1))
+            # Obtem a area de interesse
+            roi = self.obterROI(crop_image)
 
-                # Informa o frame atual para as threads
-                self.cData.setImagem(resizedROI)
-                self.iData.setImagem(resizedROI)
-                self.lData.setImagem(resizedROI)
-                self.vData.setImagem(resizedROI)
-                self.aData.setImagem(resizedROI)
+            # Altera o tamanho da imagem melhorar o processamento
+            cv2.imshow('ROI', cv2.flip(roi, 1))
 
-                # Adiciona a configuracao identificada na fila
-                self.fila.adicionar(self.configuracao[0])
+            # Informa o frame atual para as threads
+            self.analisador.setFrame(roi)
 
-                # Exibe a imagem obtida pela camera
-                flipped_image = cv2.flip(image, 1)
-                cv2.putText(flipped_image, self.fila.getUltimoAdicionado(), (30, 100), cv2.FONT_HERSHEY_SIMPLEX, 3,
-                            (0, 0, 0), 2)
-                cv2.putText(flipped_image, self.fila.toString(), (30, 450), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2)
-                cv2.imshow('Principal', flipped_image)
+            # Adiciona a configuracao identificada na fila
+            self.fila.adicionar(self.configuracao[0])
 
-                interrupt = cv2.waitKey(10)
-                if interrupt & 0xFF == ord('q'):
-                    print('Encerrando execucao...')
-                    break
+            # Exibe a imagem obtida pela camera
+            flipped_image = cv2.flip(image, 1)
+            cv2.putText(flipped_image, self.fila.getUltimoAdicionado(), (30, 100), cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 0, 0), 2)
+            cv2.putText(flipped_image, self.fila.toString(), (30, 450), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2)
+            cv2.imshow('Principal', flipped_image)
 
-                if interrupt & 0xFF == ord('c'):
-                    print('Limpando fila...')
-                    self.fila.limparFila()
-
-            except Exception as inst:
-                print(inst)
-                print('Encerrando execucao.')
+            interrupt = cv2.waitKey(10)
+            if interrupt & 0xFF == ord('q'):
+                print('Encerrando execucao...')
                 break
-                # =================================================================================================================
-                # Fim do processamento
+
+            if interrupt & 0xFF == ord('c'):
+                print('Limpando fila...')
+                self.fila.limparFila()
+
+    # =================================================================================================================
+    # Fim do processamento
 
         # Fecha a camera e as janelas
         self.capture.release()
         cv2.destroyAllWindows()
 
         # Ao sair do processamento encerra todas as threads
-        self.cData.encerrarAnalise()
-        self.iData.encerrarAnalise()
-        self.lData.encerrarAnalise()
-        self.vData.encerrarAnalise()
-        self.aData.encerrarAnalise()
+        self.analisador.encerrarAnalise()
 
     # =================================================================================================================
     # Etapa 0 - Obtem sub imagem
@@ -106,7 +79,6 @@ class Principal:
         opening = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
         closing = cv2.morphologyEx(opening, cv2.MORPH_CLOSE, kernel)
         return closing
-
 
 if __name__ == '__main__':
     principal = Principal()

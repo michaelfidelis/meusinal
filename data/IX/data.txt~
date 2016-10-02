@@ -1,0 +1,1 @@
+dataset[''] = cv2.imread('data/./gerado/*.png',0)

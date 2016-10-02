@@ -1,44 +1,16 @@
-#! /usr/bin/python
-import cv2
-import numpy as np
-from threading import Thread
+#!/usr/bin/python
 
+from DataUtils import DataUtils
 
-class Data(Thread):
-    threshold = 0.75
-    dataSet = {}
-    image = None
-    verify = False
+class Data():
 
-    def __init__(self, configuracao):
-        Thread.__init__(self)
-        self.configuracao = configuracao
-        self.analiseAtiva = True
+    nome = None
+    def __init__(self, nome, diretorio):
+        self.diretorio = diretorio
+        self.nome = nome
 
-    def setImagem(self, image):
-        self.verify = True
-        self.image = image
+        self.reader = DataUtils()
+        self.imagens = self.reader.obterImagens(self.diretorio)
 
-    def encerrarAnalise(self):
-        self.analiseAtiva = False
-        self.join()
-        print('Parando thread.')
-
-    def run(self):
-        print('Iniciando a thread.')
-        for chave in self.dataSet:
-            self.dataSet[chave] = cv2.resize(self.dataSet[chave], (120, 120))
-
-        while self.analiseAtiva:
-            if self.verify:
-                self.verify = False
-                self.configuracao[0] = self.match()
-            else:
-                self.configuracao[0] = None
-
-    def match(self):
-        for chave in self.dataSet:
-            res = cv2.matchTemplate(self.image, self.dataSet[chave], cv2.TM_CCOEFF_NORMED)
-            loc = np.where(res >= self.threshold)
-            for pt in zip(*loc[::-1]):
-                return chave.split('_', 1)[0]
+    def getImagens(self):
+        return self.imagens;
