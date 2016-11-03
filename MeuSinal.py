@@ -32,6 +32,9 @@ class Principal:
                 # Altera o tamanho da imagem melhorar o processamento
                 cv2.imshow('ROI', cv2.flip(roi, 1))
 
+                comContornos = self.obtemContornos(crop_image, roi)
+                cv2.imshow('Com contornos', cv2.flip(comContornos, 1))
+
                 # Informa o frame atual para as threads
                 self.analisador.setFrame(roi, self.fila.getUltimoAdicionado())
 
@@ -86,6 +89,32 @@ class Principal:
         opening = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
         closing = cv2.morphologyEx(opening, cv2.MORPH_CLOSE, kernel)
         return closing
+
+    def obtemContornos(self, image, roi):
+        maxArea = 0
+        drawing = np.zeros(image.shape, np.uint8)
+        _, contours, hierarchy = cv2.findContours(roi.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        for i in range(len(contours)):
+            cnt = contours[i]
+            area = cv2.contourArea(cnt)
+            if(area > maxArea):
+                maxArea = area
+                ci=i
+        cnt = contours[ci]
+        hull = cv2.convexHull(cnt)
+        moments = cv2.moments(cnt)
+        if moments['m00']!=0:
+            cx = int(moments['m10']/moments['m00'])
+            cy = int(moments['m01']/moments['m00'])
+        centr=(cx,cy)
+
+        cv2.circle(drawing,centr,5,[0,0,255],2)
+        cv2.drawContours(drawing,[cnt],0,(0,255,0),2)
+        cv2.drawContours(drawing,[hull],0,(0,0,255),2)
+        #cnt = cv2.approxPolyDP(cnt,0.02*cv2.arcLength(cnt,True),True)
+        #hull = cv2.convexHull(cnt,returnPoints = False)
+
+        return drawing
 
 if __name__ == '__main__':
     principal = Principal()

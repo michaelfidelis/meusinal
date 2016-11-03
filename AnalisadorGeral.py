@@ -27,7 +27,7 @@ class AnalisadorGeral:
         self.analisadores.append(self.analiseI)
 
         self.dataA = Data('A', 'data/A')
-        self.analiseA = Analisador(self.dataA, resultado, 0.9)
+        self.analiseA = Analisador(self.dataA, resultado, 0.87)
         self.analisadores.append(self.analiseA)
 
         self.dataIX = Data('IX', 'data/IX')
