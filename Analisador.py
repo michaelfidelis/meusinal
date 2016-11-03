@@ -44,4 +44,4 @@ class Analisador(Thread):
             res = cv2.matchTemplate(self.imagem, imagem, cv2.TM_CCOEFF_NORMED)
             loc = np.where(res >= self.criterio)
             if (len(zip(*loc[::-1])) > 0):
-                return self.data.nome
+                return self.data.nomeExibir

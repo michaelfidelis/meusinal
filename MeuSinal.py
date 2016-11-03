@@ -32,8 +32,8 @@ class Principal:
                 # Altera o tamanho da imagem melhorar o processamento
                 cv2.imshow('ROI', cv2.flip(roi, 1))
 
-                comContornos = self.obtemContornos(crop_image, roi)
-                cv2.imshow('Com contornos', cv2.flip(comContornos, 1))
+                #comContornos = self.obtemContornos(crop_image, roi)
+                #cv2.imshow('Com contornos', cv2.flip(comContornos, 1))
 
                 # Informa o frame atual para as threads
                 self.analisador.setFrame(roi, self.fila.getUltimoAdicionado())

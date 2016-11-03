@@ -34,6 +34,15 @@ class AnalisadorGeral:
         self.analiseIX = Analisador(self.dataIX, resultado, gatilho = 'I')
         self.analisadores.append(self.analiseIX)
 
+        self.dataMaoAberta = Data('MaoAberta', 'data/MAO_ABERTA')
+        self.analiseMaoAberta = Analisador(self.dataMaoAberta, resultado, criterio = 0.8)
+        self.analisadores.append(self.analiseMaoAberta)
+
+        self.dataMaoAbertaLado = Data('MaoAbertaLado', 'data/MAO_ABERTA_LADO')
+        self.analiseMaoAbertaLado = Analisador(self.dataMaoAbertaLado, resultado, gatilho = 'MaoAberta', criterio = 0.8)
+        self.analisadores.append(self.analiseMaoAbertaLado)
+
+
     def iniciarAnalise(self):
         for analise in self.analisadores:
             analise.start()
