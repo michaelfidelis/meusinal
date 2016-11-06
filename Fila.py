@@ -6,22 +6,21 @@ from Dicionario import Dicionario
 
 import itertools
 class Fila:
-    TAMANHO_FILA = 5
 
     def __init__(self):
-        self.letra = None
-        self.fila = deque([], maxlen=10)
-        self.dicio = Dicionario(self.fila)
+        self.sinal = None
+        self.fila = deque([], maxlen=5)
+        self.dicionario = Dicionario(self.fila)
 
-    def adicionar(self, letra):
-        if letra is not None and self.letra != letra:
-            self.fila.append(letra)
-            self.dicio.verifica()
-            self.letra = self.fila[-1]
-            print 'Adicionando: ' + str(letra)
+    def adicionar(self, sinal):
+        if sinal is not None and self.sinal != sinal:
+            self.fila.append(sinal)
+            self.dicionario.verifica()
+            self.sinal = self.fila[-1]
+            print 'Adicionando: ' + str(sinal)
 
     def getUltimoAdicionado(self):
-        return self.letra
+        return self.sinal
 
     def getFila(self):
         return self.fila

@@ -3,7 +3,7 @@
 
 import cv2
 import numpy as np
-from Utils import Fila
+from Fila import Fila
 import traceback
 from Data import Data
 from AnalisadorGeral import AnalisadorGeral
