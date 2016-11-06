@@ -10,14 +10,16 @@ from AnalisadorGeral import AnalisadorGeral
 
 # =====================================================================================================================
 # Principal
-class Principal:
+class MeuSinal:
     def __init__(self):
         self.capture = cv2.VideoCapture(0)
         self.configuracao = ['']
         self.fila = Fila()
         self.analisador = AnalisadorGeral(self.configuracao)
         self.analisador.iniciarAnalise()
+        self.processar()
 
+    def processar(self):
         while self.capture.isOpened():
             try:
                 # Obtem a imagem da camera
@@ -44,7 +46,7 @@ class Principal:
                 flipped_image = cv2.flip(image, 1)
                 cv2.putText(flipped_image, self.fila.getUltimoAdicionado(), (30, 100), cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 0, 0), 2)
                 cv2.putText(flipped_image, self.fila.toString(), (30, 450), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2)
-                cv2.imshow('Principal', flipped_image)
+                cv2.imshow('MeuSinal', flipped_image)
 
                 interrupt = cv2.waitKey(10)
                 if interrupt & 0xFF == ord('q'):
@@ -107,13 +109,12 @@ class Principal:
             cy = int(moments['m01']/moments['m00'])
         centr=(cx,cy)
 
-        cv2.circle(drawing,centr,5,[0,0,255],2)
-        cv2.drawContours(drawing,[cnt],0,(0,255,0),2)
+        cv2.drawContours(drawing,[cnt],0,(255,255,255),2)
         cv2.drawContours(drawing,[hull],0,(0,0,255),2)
-        #cnt = cv2.approxPolyDP(cnt,0.02*cv2.arcLength(cnt,True),True)
+        cnt = cv2.approxPolyDP(cnt,0.02*cv2.arcLength(cnt,True),True)
         #hull = cv2.convexHull(cnt,returnPoints = False)
 
         return drawing
 
 if __name__ == '__main__':
-    principal = Principal()
+    MeuSinal = MeuSinal()
