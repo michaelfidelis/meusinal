@@ -37,10 +37,9 @@ class Principal:
 
                 # Informa o frame atual para as threads
                 self.analisador.setFrame(roi, self.fila.getUltimoAdicionado())
-
                 # Adiciona a configuracao identificada na fila
                 self.fila.adicionar(self.configuracao[0])
-
+                self.configuracao[0] = None
                 # Exibe a imagem obtida pela camera
                 flipped_image = cv2.flip(image, 1)
                 cv2.putText(flipped_image, self.fila.getUltimoAdicionado(), (30, 100), cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 0, 0), 2)
