@@ -6,7 +6,7 @@ from Dicionario import Dicionario
 
 import itertools
 class Fila:
-    TAMANHO_FILA = 10
+    TAMANHO_FILA = 5
 
     def __init__(self):
         self.letra = None
