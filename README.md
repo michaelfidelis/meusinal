@@ -3,10 +3,11 @@
 
 Utilizando OpenCV e Python
 
-**Estado atual:** Identifica as configurações de A, C, I, L e V
+**Estado atual:** Identifica as configurações de A, C, I, L, V
 
-**Em andamento:** Identificar o restante das configurações
+**Objetivo:** Identificar sinais com mais de uma configuração (movimento/dinâmicos)
+    ---- Alcançado: Identificamos *J* e *Palmas*
 
-**Objetivo:** Identificar sinais com mais de uma configuração (movimento)
+**Em andamento:** Identificar mais alguns sinais dinâmicos
 
-**Status:** [###################################===============] **70%**
+**Status:** [########################################==========] **80%**
