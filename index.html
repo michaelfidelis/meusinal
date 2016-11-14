@@ -1,93 +1,84 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="author" content="https://plus.google.com/+MichaelFidelisDev">
-    <meta name="description" content="Projeto Meu Sinal: Faça seu gesto, colabore!">
-    <meta name="keywords" content="meusinal, python, opencv, unip, tcc, michael fidelis, drielly pereira, stephanie fernandes">
-    <title>Meu Sinal </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="author" href="https://plus.google.com/+MichaelFidelisDev">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    
-  </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">Meu Sinal</h1>
-      <h2 class="project-tagline">Sinais que fazem a diferença!</h2>
-      <h2 class="project-tagline">
-        <a class="github-button" href="https://github.com/michaelfidelis/meusinal" 
-           data-icon="octicon-star" data-style="mega" data-count-href="/michaelfidelis/meusinal/stargazers" 
-           data-count-api="/repos/michaelfidelis/meusinal#stargazers_count" 
-           data-count-aria-label="# stargazers on GitHub" 
-           aria-label="Star michaelfidelis/meusinal on GitHub">Star</a>
-        
-        
-         <a class="github-button" href="https://github.com/michaelfidelis/meusinal/fork" 
-            data-icon="octicon-repo-forked" data-style="mega" 
-            data-count-href="/michaelfidelis/meusinal/network" 
-            data-count-api="/repos/michaelfidelis/meusinal#forks_count" 
-            data-count-aria-label="# forks on GitHub" 
-            aria-label="Fork michaelfidelis/meusinal on GitHub">Fork</a>
-      </h2>
-      <a href="https://github.com/michaelfidelis/meusinal" class="btn">View on GitHub</a>
-      <a href="https://github.com/michaelfidelis/meusinal/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/michaelfidelis/meusinal/tarball/master" class="btn">Download .tar.gz</a>
-    </section>
-
-    <section class="main-content">
-      <h3>
-<a id="bem-vindo-ao-meu-sinal" class="anchor" href="#bem-vindo-ao-meu-sinal" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Bem vindo ao Meu Sinal</h3>
-
-<p>Este projeto tem como finalidade o reconhecimento de sinais dinâmicos de LIBRAS através de técnicas de Visão Computacional, como meio de integração do deficiente auditivo na sociedade. O objetivo principal é facilitar a comunicação com estas pessoas, através de um dispositivo que reconheça, identifique e por fim traduza os sinais dinâmicos realizados em frente uma câmera integrada ao dispositivo. Acredita-se que tudo isso possa futuramente aumentar não só a inclusão social dos deficientes auditivos, mas também o aprendizado de LIBRAS.</p>
-
-<h3>
-<a id="como-funciona" class="anchor" href="#como-funciona" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Como funciona?</h3>
-
-<p>Utilizando uma webcam são obtidas as imagens para processamento e comparadas com amostras que representam os sinais de LIBRAS. </p>
-
-<p>O algoritmo foi construído em Python, utilizando as bibliotecas OpenCV e Numpy. </p>
-
-<p>Assim que capturamos a imagem, é obtida a região de interesse para processamento (aplicando mascaras, algoritmo de segmentação etc) e comparada com as amostras geradas previamente. Se identificada uma configuração de LIBRAS, adicionamos na fila de sinais identificados e buscamos seu significado no dicionário para apresentar ao usuário.</p>
-
-<p>Vale ressaltar que o processamento é realizado em threads (processos) diferentes da captação de imagens, para que o usuário tenha uma experiência melhor. </p>
-
-<p>Questões como luminosidade e pigmentação da pele podem influenciar na identificação de sinais.</p>
-
-<p>Para que seja possível identificar um sinal é preciso que sejam geradas amostras e que as mesmas sejam inseridas no algoritmo programaticamente. Estamos trabalhando para tornar esse processo mais fácil :)</p>
-
-<h3>
-<a id="diagramas" class="anchor" href="#diagramas" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Diagramas</h3>
-
-<h4>
-<a id="diagrama-de-classes" class="anchor" href="#diagrama-de-classes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Diagrama de classes</h4>
-
-<p><img src="https://github.com/michaelfidelis/meusinal/blob/master/documentacao/jpg/Diagrama%20de%20Classes.jpg?raw=true" alt="Diagrama de classes"></p>
-
-<hr>
-
-<h4>
-<a id="diagrama-de-sequência" class="anchor" href="#diagrama-de-sequ%C3%AAncia" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Diagrama de sequência</h4>
-
-<p><img src="https://raw.githubusercontent.com/michaelfidelis/meusinal/master/documentacao/jpg/Diagrama%20de%20Sequencia.jpg" alt="Diagrama de classes"></p>
-
-<hr> 
-<h4>
-<a id="fluxograma" class="anchor" href="#fluxograma" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Fluxograma</h4>
-
-<p><img src="https://github.com/michaelfidelis/meusinal/blob/master/documentacao/jpg/Fluxograma.jpg?raw=true" alt="Fluxograma"></p>
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/michaelfidelis/meusinal">Meu Sinal</a> is maintained by <a href="https://github.com/michaelfidelis">Michael Fidelis</a>.</span>
-
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
-
-    </section>
-
-  
-  </body>
+   <head>
+      <meta charset="UTF-8">
+      <meta name="author" content="https://plus.google.com/+MichaelFidelisDev">
+      <meta name="description" content="Projeto Meu Sinal: Faça seu gesto, colabore!">
+      <meta name="keywords" content="meusinal, python, opencv, unip, tcc, michael fidelis, drielly pereira, stephanie fernandes">
+      <title>Meu Sinal </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="author" href="https://plus.google.com/+MichaelFidelisDev">
+      <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+      <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+      <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+      <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+      <script async defer src="https://buttons.github.io/buttons.js"></script>
+   </head>
+   <body>
+      <section class="page-header">
+         <h1 class="project-name">Meu Sinal</h1>
+         <h2 class="project-tagline">Sinais que fazem a diferença!</h2>
+         <h2 class="project-tagline">
+            <a class="github-button" href="https://github.com/michaelfidelis/meusinal" 
+               data-icon="octicon-star" data-style="mega" data-count-href="/michaelfidelis/meusinal/stargazers" 
+               data-count-api="/repos/michaelfidelis/meusinal#stargazers_count" 
+               data-count-aria-label="# stargazers on GitHub" 
+               aria-label="Star michaelfidelis/meusinal on GitHub">Star</a>
+            <a class="github-button" href="https://github.com/michaelfidelis/meusinal/fork" 
+               data-icon="octicon-repo-forked" data-style="mega" 
+               data-count-href="/michaelfidelis/meusinal/network" 
+               data-count-api="/repos/michaelfidelis/meusinal#forks_count" 
+               data-count-aria-label="# forks on GitHub" 
+               aria-label="Fork michaelfidelis/meusinal on GitHub">Fork</a>
+         </h2>
+         <a href="https://github.com/michaelfidelis/meusinal" class="btn">View on GitHub</a>
+         <a href="https://github.com/michaelfidelis/meusinal/zipball/master" class="btn">Download .zip</a>
+         <a href="https://github.com/michaelfidelis/meusinal/tarball/master" class="btn">Download .tar.gz</a>
+      </section>
+      <section class="main-content">
+         <h3>
+            <a id="bem-vindo-ao-meu-sinal" class="anchor" href="#bem-vindo-ao-meu-sinal" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Bem vindo ao Meu Sinal
+         </h3>
+         <p>Este projeto tem como finalidade o reconhecimento de sinais dinâmicos de LIBRAS através de técnicas de Visão Computacional, como meio de integração do deficiente auditivo na sociedade. O objetivo principal é facilitar a comunicação com estas pessoas, através de um dispositivo que reconheça, identifique e por fim traduza os sinais dinâmicos realizados em frente uma câmera integrada ao dispositivo. Acredita-se que tudo isso possa futuramente aumentar não só a inclusão social dos deficientes auditivos, mas também o aprendizado de LIBRAS.</p>
+         <h3>
+            <a id="como-funciona" class="anchor" href="#como-funciona" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Como funciona?
+         </h3>
+         <p>Utilizando uma webcam são obtidas as imagens para processamento e comparadas com amostras que representam os sinais de LIBRAS. </p>
+         <p>O algoritmo foi construído em Python, utilizando as bibliotecas OpenCV e Numpy. </p>
+         <p>Assim que capturamos a imagem, é obtida a região de interesse para processamento (aplicando mascaras, algoritmo de segmentação etc) e comparada com as amostras geradas previamente. Se identificada uma configuração de LIBRAS, adicionamos na fila de sinais identificados e buscamos seu significado no dicionário para apresentar ao usuário.</p>
+         <p>Vale ressaltar que o processamento é realizado em threads (processos) diferentes da captação de imagens, para que o usuário tenha uma experiência melhor. </p>
+         <p>Questões como luminosidade e pigmentação da pele podem influenciar na identificação de sinais.</p>
+         <p>Para que seja possível identificar um sinal é preciso que sejam geradas amostras e que as mesmas sejam inseridas no algoritmo programaticamente. Estamos trabalhando para tornar esse processo mais fácil :)</p>
+         <h3>
+            <a id="diagramas" class="anchor" href="#diagramas" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Diagramas
+         </h3>
+         <h4>
+            <a id="diagrama-de-classes" class="anchor" href="#diagrama-de-classes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Diagrama de classes
+         </h4>
+         <p><img src="https://github.com/michaelfidelis/meusinal/blob/master/documentacao/jpg/Diagrama%20de%20Classes.jpg?raw=true" alt="Diagrama de classes"></p>
+         <hr>
+         <h4>
+            <a id="diagrama-de-sequência" class="anchor" href="#diagrama-de-sequ%C3%AAncia" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Diagrama de sequência
+         </h4>
+         <p><img src="https://raw.githubusercontent.com/michaelfidelis/meusinal/master/documentacao/jpg/Diagrama%20de%20Sequencia.jpg" alt="Diagrama de classes"></p>
+         <hr>
+         <h4>
+            <a id="fluxograma" class="anchor" href="#fluxograma" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Fluxograma
+         </h4>
+         <p><img src="https://github.com/michaelfidelis/meusinal/blob/master/documentacao/jpg/Fluxograma.jpg?raw=true" alt="Fluxograma"></p>
+         <footer class="site-footer">
+            <span class="site-footer-owner"><a href="https://github.com/michaelfidelis/meusinal">Meu Sinal</a> is maintained by <a href="https://github.com/michaelfidelis">Michael Fidelis</a>.</span>
+            <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+         </footer>
+      </section>
+      <script>
+         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+         
+         ga('create', 'UA-87363679-1', 'auto');
+         ga('send', 'pageview');
+      </script>
+   </body>
 </html>
