@@ -9,7 +9,8 @@ class Dicionario:
         self.dicionario = {}
         self.fila = fila
         self.dicionario['J'] = (['I', 'IX'], ['J', 'IX'])
-        self.dicionario['palmas'] = (['MaoAberta', 'MaoAbertaLado'], ['MaoAbertaLado', 'MaoAberta'], ['palmas', 'palmas'], ['palmas', 'MaoAbertaLado'])
+        self.dicionario['H'] = (['V', 'VH'], ['H', 'VH'])
+        self.dicionario['palmas'] = (['MaoAberta', 'MaoAbertaLado'], ['palmas', 'MaoAbertaLado'])
 
     def verifica(self):
         for chave, tupla in self.dicionario.iteritems():

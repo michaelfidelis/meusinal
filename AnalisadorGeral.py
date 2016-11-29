@@ -22,6 +22,10 @@ class AnalisadorGeral:
         self.analiseV = Analisador(self.dataV, resultado)
         self.analisadores.append(self.analiseV)
 
+        self.dataVH = Data('VH', 'data/VH')
+        self.analiseVH = Analisador(self.dataVH, resultado, gatilho = 'V', criterio = 0.8)
+        self.analisadores.append(self.analiseVH)
+
         self.dataI = Data('I', 'data/I')
         self.analiseI = Analisador(self.dataI, resultado)
         self.analisadores.append(self.analiseI)
